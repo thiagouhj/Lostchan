@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostchan</title>
+    <style>
+        /* Estilos Retro Anos 2000 (Tema Yotsuba Clássico) */
+        body {
+            background-color: #FFFFEE;
+            color: #800000;
+            font-family: arial, helvetica, sans-serif;
+            font-size: 10pt;
+            margin: 0;
+            padding: 10px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: #0000EE;
+            text-decoration: underline;
+        }
+
+        a:visited {
+            color: #551A8B;
+        }
+
+        a:hover {
+            color: #DD0000;
+        }
+
+        /* Layout com colunas para os banners laterais */
+        .page-wrapper {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        .side-banner {
+            width: 160px;
+            padding: 5px;
+            text-align: center;
+            font-size: 8pt;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-banner > a:not(.square-banner) {
+            display: block;
+            flex: 1;
+            min-height: 600px;
+        }
+
+        .side-banner img {
+            width: 150px;
+            height: 100%;
+            min-height: 600px;
+            object-fit: cover;
+            border: 1px solid #D9BFB7;
+            background-color: #F0E0D6;
+        }
+
+        .side-banner .square-banner img {
+            height: 150px;
+            min-height: 0;
+            object-fit: cover;
+        }
+
+        .us-banner-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .side-banner .symbol-icon {
+            width: 32px;
+            height: 32px;
+            min-height: 0;
+            object-fit: contain;
+            border: 0;
+            background: transparent;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #800000;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 28pt;
+            margin: 5px 0;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 9pt;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        /* Barra de navegação do topo */
+        .top-nav {
+            position: relative;
+            font-size: 9pt;
+            border-bottom: 1px solid #D9BFB7;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: -3px;
+            right: 0;
+            padding: 2px 6px;
+            font-size: 8pt;
+            cursor: pointer;
+        }
+
+        /* Tabela de Boards */
+        .boards-table {
+            width: 80%;
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+            border: 1px solid #B7C5D9;
+            background-color: #EEF2FF;
+            border-collapse: collapse;
+        }
+
+        .boards-table th {
+            background-color: #98E;
+            color: #FFFFFF;
+            font-size: 10pt;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #B7C5D9;
+        }
+
+        .boards-table td {
+            padding: 8px;
+            border: 1px solid #B7C5D9;
+            vertical-align: top;
+            font-size: 9pt;
+        }
+
+        .board-group-title {
+            font-weight: bold;
+            color: #800000;
+            margin-bottom: 3px;
+        }
+
+        /* Caixa de Nova Postagem */
+        .post-form-toggle {
+            width: fit-content;
+            margin: 0 auto 15px;
+            padding: 4px 10px;
+            background-color: #ECE9D8;
+            border: 1px solid #7F9DB9;
+            color: #800000;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .post-form-toggle::-webkit-details-marker {
+            display: none;
+        }
+
+        .post-form-container {
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+            background-color: #F0E0D6;
+            border: 1px solid #D9BFB7;
+            padding: 10px;
+        }
+
+        .post-form-title {
+            text-align: center;
+            font-weight: bold;
+            color: #800000;
+            margin-bottom: 8px;
+            font-size: 10pt;
+        }
+
+        .form-row {
+            display: flex;
+            margin-bottom: 4px;
+        }
+
+        .form-label {
+            width: 90px;
+            background-color: #EA8;
+            color: #800000;
+            font-weight: bold;
+            font-size: 9pt;
+            padding: 3px 5px;
+            border: 1px solid #D9BFB7;
+        }
+
+        .form-input {
+            flex-grow: 1;
+        }
+
+        .form-input input[type="text"],
+        .form-input select,
+        .form-input textarea {
+            width: 98%;
+            font-family: arial, helvetica, sans-serif;
+            font-size: 9pt;
+            border: 1px solid #A9A9A9;
+            padding: 2px;
+        }
+
+        .form-submit {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .form-submit input {
+            background-color: #ECE9D8;
+            border: 1px solid #7F9DB9;
+            padding: 2px 10px;
+            font-size: 9pt;
+            cursor: pointer;
+        }
+
+        /* Feed de Mensagens / Tópicos */
+        .threads-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .thread {
+            margin-bottom: 20px;
+        }
+
+        .post {
+            background-color: #F0E0D6;
+            border: 1px solid #D9BFB7;
+            padding: 8px;
+            display: inline-block;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .thread-board {
+            color: #117743;
+            font-weight: bold;
+        }
+
+        .post-header {
+            font-size: 9pt;
+            margin-bottom: 5px;
+        }
+
+        .post-subject {
+            color: #0F0C5D;
+            font-weight: bold;
+        }
+
+        .post-author {
+            color: #117743;
+            font-weight: bold;
+        }
+
+        .post-date {
+            color: #333;
+        }
+
+        .post-id {
+            color: #333;
+        }
+
+        .post-body {
+            font-size: 10pt;
+            color: #000;
+            line-height: 1.3;
+            white-space: pre-wrap;
+        }
+
+        .thread-replies {
+            margin: 6px 0 0 20px;
+            padding-left: 10px;
+            border-left: 1px solid #D9BFB7;
+        }
+
+        .reply {
+            margin: 6px 0;
+        }
+
+        .reply .post {
+            background-color: #F8F0E8;
+        }
+
+        .reply-form {
+            margin-top: 8px;
+        }
+
+        .reply-form input[type="text"],
+        .reply-form textarea {
+            max-width: 450px;
+            box-sizing: border-box;
+            font-family: arial, helvetica, sans-serif;
+            font-size: 9pt;
+        }
+
+        .reply-form textarea {
+            display: block;
+            width: 100%;
+            margin: 4px 0;
+        }
+
+        .reply-form input[type="text"] {
+            width: 180px;
+        }
+
+        .reply-form button {
+            background-color: #ECE9D8;
+            border: 1px solid #7F9DB9;
+            padding: 2px 10px;
+            font-size: 9pt;
+            cursor: pointer;
+        }
+
+        .reply-form button:disabled,
+        .form-submit input:disabled {
+            cursor: wait;
+        }
+
+        .connection-status {
+            width: 90%;
+            max-width: 800px;
+            min-height: 1em;
+            margin: 0 auto 10px;
+            text-align: center;
+            color: #444;
+        }
+
+        .connection-status[data-error="true"] {
+            color: #800000;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 8pt;
+            color: #666;
+            margin-top: auto;
+            padding-top: 40px;
+            border-top: 1px solid #D9BFB7;
+            padding-bottom: 10px;
+        }
+
+        body[data-theme="dark"] {
+            background-color: #1b1b1b;
+            color: #ddd;
+        }
+
+        body[data-theme="dark"] a {
+            color: #8ab4f8;
+        }
+
+        body[data-theme="dark"] a:visited {
+            color: #c58af9;
+        }
+
+        body[data-theme="dark"] a:hover {
+            color: #ff8a80;
+        }
+
+        body[data-theme="dark"] .top-nav,
+        body[data-theme="dark"] footer {
+            border-color: #555;
+        }
+
+        body[data-theme="dark"] .boards-table {
+            background-color: #25283a;
+            border-color: #596078;
+        }
+
+        body[data-theme="dark"] .boards-table th {
+            background-color: #454c70;
+            border-color: #596078;
+        }
+
+        body[data-theme="dark"] .boards-table td {
+            border-color: #596078;
+        }
+
+        body[data-theme="dark"] .board-group-title,
+        body[data-theme="dark"] .form-label,
+        body[data-theme="dark"] .post-form-title {
+            color: #f0c8b8;
+        }
+
+        body[data-theme="dark"] .post-form-toggle,
+        body[data-theme="dark"] .form-submit input,
+        body[data-theme="dark"] .reply-form button,
+        body[data-theme="dark"] .theme-toggle {
+            background-color: #343434;
+            color: #eee;
+            border-color: #777;
+        }
+
+        body[data-theme="dark"] .post-form-container,
+        body[data-theme="dark"] .post,
+        body[data-theme="dark"] .reply .post {
+            background-color: #292421;
+            border-color: #594d47;
+        }
+
+        body[data-theme="dark"] .form-label {
+            background-color: #51483c;
+            border-color: #594d47;
+        }
+
+        body[data-theme="dark"] .form-input input,
+        body[data-theme="dark"] .form-input select,
+        body[data-theme="dark"] .form-input textarea,
+        body[data-theme="dark"] .reply-form input,
+        body[data-theme="dark"] .reply-form textarea {
+            background-color: #222;
+            color: #eee;
+            border-color: #777;
+        }
+
+        body[data-theme="dark"] .post-subject {
+            color: #b9b7ff;
+        }
+
+        body[data-theme="dark"] .post-author,
+        body[data-theme="dark"] .thread-board {
+            color: #8fceaa;
+        }
+
+        body[data-theme="dark"] .post-date,
+        body[data-theme="dark"] .post-id,
+        body[data-theme="dark"] .post-body,
+        body[data-theme="dark"] .connection-status,
+        body[data-theme="dark"] .subtitle {
+            color: #ccc;
+        }
+
+        body[data-theme="dark"] .connection-status[data-error="true"] {
+            color: #ff8a80;
+        }
+
+        body[data-theme="dark"] .thread-replies,
+        body[data-theme="dark"] .main-content hr {
+            border-color: #594d47 !important;
+        }
+
+        body[data-theme="dark"] .side-banner img {
+            background-color: #292421;
+            border-color: #594d47;
+        }
+
+        /* Responsividade básica para telas menores */
+        @media (max-width: 900px) {
+            .side-banner {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        [ <a href="#tech">tech</a> / <a href="#gen">gen</a> / <a href="#pol">pol</a> / <a href="jogos.html">v</a> / <a href="anime.html">a</a> ]
+        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Modo escuro</button>
+    </div>
+
+    <div class="page-wrapper">
+        <!-- Banner Esquerdo (Com a imagem enviada) -->
+        <div class="side-banner">
+            <a href="anime.html">
+                <img src="banner-anime.png" alt="Banner do board de anime">
+            </a>
+            <div style="margin-top: 5px;">/a/ - Anime</div>
+            <div class="us-banner-row">
+                <a class="square-banner" href="#gen">
+                    <img src="banner-eua.png" alt="Ilustração com a bandeira dos Estados Unidos">
+                </a>
+                <img class="symbol-icon" src="symbol.png" alt="Símbolo">
+            </div>
+            <div style="margin-top: 5px;">Estados Unidos</div>
+        </div>
+
+        <!-- Conteúdo Principal do Site -->
+        <div class="main-content">
+            <header>
+                <h1><img src="skull.png" alt="Caveira" style="width: 42px; height: 42px; vertical-align: middle; margin-right: 6px;">Lostchan</h1>
+                <div class="subtitle">Bem-vindo ao Lostchan — Fórum Anônimo de Discussão</div>
+            </header>
+
+            <table class="boards-table">
+                <thead>
+                    <tr>
+                        <th>O que é Lostchan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>O Lostchan é um espaço para as pessoas se comunicarem, partilharem ideias e conversarem sobre os seus interesses. Escolhe um board, participa nas discussões e conhece diferentes pontos de vista, sempre com respeito pelos outros.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Tabela de Boards -->
+            <table class="boards-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Boards</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="50%">
+                            <div class="board-group-title">Interesses</div>
+                            <ul>
+                                <li><a href="#tech">/tech/ - Tecnologia</a></li>
+                                <li><a href="jogos.html">/v/ - Jogos</a></li>
+                                <li><a href="anime.html">/a/ - Anime & Mangá</a></li>
+                            </ul>
+                        </td>
+                        <td width="50%">
+                            <div class="board-group-title">Geral</div>
+                            <ul>
+                                <li><a href="#gen">/gen/ - Geral</a></li>
+                                <li><a href="#pol">/pol/ - Política</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <details>
+                <summary class="post-form-toggle">Publique um comentário</summary>
+                <!-- Formulário de Postagem -->
+                <div class="post-form-container">
+                    <div class="post-form-title">Criar Novo Tópico</div>
+                    <form id="postForm">
+                        <div class="form-row">
+                            <label class="form-label" for="boardInput">Board</label>
+                            <div class="form-input">
+                                <select id="boardInput" required>
+                                    <option value="gen">/gen/ - Geral</option>
+                                    <option value="tech">/tech/ - Tecnologia</option>
+                                    <option value="pol">/pol/ - Política</option>
+                                    <option value="v">/v/ - Jogos</option>
+                                    <option value="a">/a/ - Anime &amp; Mangá</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="form-label" for="authorInput">Nome</label>
+                            <div class="form-input">
+                                <input type="text" id="authorInput" placeholder="Anônimo" maxlength="30" autocomplete="nickname">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="form-label" for="subjectInput">Assunto</label>
+                            <div class="form-input">
+                                <input type="text" id="subjectInput" placeholder="Assunto do tópico" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="form-label" for="commentInput">Comentário</label>
+                            <div class="form-input">
+                                <textarea id="commentInput" rows="4" maxlength="2000" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <input id="postSubmit" type="submit" value="Enviar">
+                        </div>
+                    </form>
+                </div>
+            </details>
+
+            <hr style="border: 0; border-top: 1px solid #D9BFB7; width: 90%; margin: 20px auto;">
+
+            <!-- Área onde as postagens aparecem -->
+            <p class="connection-status" id="connectionStatus" role="status" aria-live="polite">Se és uma egirl contacte os admins do Lostchan</p>
+            <p class="connection-status"><a href="https://discord.gg/h3bhtJwHm" target="_blank" rel="noopener noreferrer">Junte-se ao nosso server no discord</a></p>
+            <div class="threads-container" id="threadsContainer">
+            </div>
+
+            <footer>
+                Lostchan &copy; 2000-2026. Todos os direitos reservados.
+                <br>Criado por: Ph4nt0m_Sec e Zera_88
+            </footer>
+        </div>
+
+        <!-- Banner Direito -->
+        <div class="side-banner">
+            <a href="jogos.html">
+                <img src="banner-jogos.png" alt="Banner do board de jogos">
+            </a>
+            <div style="margin-top: 5px;">/v/ - Jogos</div>
+            <a class="square-banner" href="#gen">
+                <img src="banner-portugal.png" alt="Ilustração com a bandeira de Portugal">
+            </a>
+            <div style="margin-top: 5px;">Portugal</div>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+
+        function setTheme(isDark) {
+            document.body.dataset.theme = isDark ? 'dark' : 'light';
+            themeToggle.textContent = isDark ? 'Modo claro' : 'Modo escuro';
+            themeToggle.setAttribute('aria-pressed', String(isDark));
+            localStorage.setItem('lostchan-theme', isDark ? 'dark' : 'light');
+        }
+
+        setTheme(localStorage.getItem('lostchan-theme') === 'dark');
+        themeToggle.addEventListener('click', () => {
+            setTheme(document.body.dataset.theme !== 'dark');
+        });
+    </script>
+
+    <script>
+        const form = document.getElementById('postForm');
+        const statusElement = document.getElementById('connectionStatus');
+        const threadsContainer = document.getElementById('threadsContainer');
+        const storageKey = 'lostchan-posts';
+        let threads = [];
+
+        function setStatus(message, isError = false) {
+            statusElement.textContent = message;
+            statusElement.dataset.error = String(isError);
+        }
+
+        function saveThreads() {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(threads));
+                return true;
+            } catch (error) {
+                console.error('Erro ao guardar as publicações no navegador:', error);
+                setStatus('Não foi possível guardar a publicação neste navegador.', true);
+                return false;
+            }
+        }
+
+        function makeElement(tag, className, text) {
+            const element = document.createElement(tag);
+            if (className) element.className = className;
+            if (text !== undefined) element.textContent = text;
+            return element;
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return Number.isNaN(date.getTime()) ? 'Data desconhecida' : date.toLocaleString('pt-PT');
+        }
+
+        function makePost(data, id, isReply = false) {
+            const post = makeElement('div', isReply ? 'post reply' : 'post');
+            const header = makeElement('div', 'post-header');
+
+            if (data.board) header.append(makeElement('span', 'thread-board', `/${data.board}/ `));
+            if (data.subject) header.append(makeElement('span', 'post-subject', `${data.subject} `));
+            header.append(makeElement('span', 'post-author', `${data.author || 'Anónimo'} `));
+            header.append(makeElement('span', 'post-date', `${formatDate(data.createdAt)} `));
+            header.append(makeElement('span', 'post-id', `No.${id.slice(0, 6)}`));
+            post.append(header, makeElement('div', 'post-body', data.body));
+            return post;
+        }
+
+        function makeThread(data) {
+            const thread = makeElement('article', 'thread');
+            thread.dataset.threadId = data.id;
+            thread.append(makePost(data, data.id));
+
+            const replies = makeElement('div', 'thread-replies');
+            const repliesList = makeElement('div', 'replies-list');
+            repliesList.replaceChildren(...(data.replies || []).slice(-100).map(reply => {
+                const replyElement = makeElement('div', 'reply');
+                replyElement.append(makePost(reply, reply.id, true));
+                return replyElement;
+            }));
+            replies.append(repliesList);
+
+            const replyForm = makeElement('form', 'reply-form');
+            const nameInput = makeElement('input');
+            nameInput.type = 'text';
+            nameInput.maxLength = 30;
+            nameInput.placeholder = 'Nome (opcional)';
+            nameInput.setAttribute('aria-label', 'Nome da resposta (opcional)');
+            const bodyInput = makeElement('textarea');
+            bodyInput.rows = 2;
+            bodyInput.maxLength = 2000;
+            bodyInput.required = true;
+            bodyInput.placeholder = 'Escreva uma resposta...';
+            bodyInput.setAttribute('aria-label', 'Resposta');
+            const submitButton = makeElement('button', '', 'Responder');
+            submitButton.type = 'submit';
+            replyForm.append(nameInput, bodyInput, submitButton);
+            replyForm.addEventListener('submit', async event => {
+                event.preventDefault();
+                const body = bodyInput.value.trim();
+                if (!body) return;
+                data.replies = data.replies || [];
+                data.replies.push({
+                    id: createId(),
+                    author: nameInput.value.trim() || 'Anônimo',
+                    body,
+                    createdAt: new Date().toISOString()
+                });
+                if (!saveThreads()) return;
+                replyForm.reset();
+                renderThreads();
+                setStatus('Resposta publicada neste navegador.');
+            });
+            replies.append(replyForm);
+            thread.append(replies);
+            return thread;
+        }
+
+        function createId() {
+            return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+        }
+
+        function renderThreads() {
+            threadsContainer.replaceChildren(...threads.slice(-50).reverse().map(makeThread));
+        }
+
+        try {
+            const savedThreads = localStorage.getItem(storageKey);
+            if (savedThreads) {
+                const parsedThreads = JSON.parse(savedThreads);
+                if (!Array.isArray(parsedThreads)) throw new TypeError('Formato de publicações inválido.');
+                threads = parsedThreads;
+            }
+            renderThreads();
+        } catch (error) {
+            console.error('Erro ao carregar as publicações guardadas:', error);
+            setStatus('Não foi possível carregar as publicações guardadas neste navegador.', true);
+        }
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const body = document.getElementById('commentInput').value.trim();
+            if (!body) return;
+            threads.push({
+                id: createId(),
+                board: document.getElementById('boardInput').value,
+                author: document.getElementById('authorInput').value.trim() || 'Anónimo',
+                subject: document.getElementById('subjectInput').value.trim(),
+                body,
+                createdAt: new Date().toISOString(),
+                replies: []
+            });
+            if (!saveThreads()) return;
+            form.reset();
+            renderThreads();
+            setStatus('Tópico publicado neste navegador.');
+        });
+    </script>
+</body>
+</html>

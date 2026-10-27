@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostchan</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background: #FFFFEE;
+            color: #800000;
+            font: 10pt Arial, Helvetica, sans-serif;
+        }
+
+        main {
+            width: min(100%, 800px);
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h1 {
+            margin: 5px 0;
+            font: bold 28pt "Times New Roman", Times, serif;
+        }
+
+        .subtitle {
+            color: #444;
+            font-size: 9pt;
+        }
+
+        .board-title {
+            margin: 20px 0;
+            padding: 5px;
+            border-bottom: 1px solid #D9BFB7;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+
+        .access-gate {
+            width: min(90%, 360px);
+            margin: 40px auto;
+            padding: 16px;
+            box-sizing: border-box;
+            background: #F0E0D6;
+            border: 1px solid #D9BFB7;
+            text-align: center;
+        }
+
+        .access-gate h2 {
+            margin-top: 0;
+        }
+
+        .access-gate input {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 6px;
+            box-sizing: border-box;
+        }
+
+        .access-gate button {
+            padding: 4px 12px;
+            cursor: pointer;
+        }
+
+        .access-status {
+            min-height: 1em;
+            color: #800000;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .thread {
+            margin: 0 0 20px;
+            width: min(90%, 260px);
+        }
+
+        .post {
+            display: inline-block;
+            width: min(100%, 228px);
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            background: #F0E0D6;
+            border: 1px solid #D9BFB7;
+        }
+
+        .post-header {
+            margin-bottom: 8px;
+            font-size: 8pt;
+            white-space: nowrap;
+        }
+
+        .post-date {
+            display: block;
+            margin-top: 3px;
+            color: #555;
+            font-size: 7pt;
+        }
+
+        .thread-board,
+        .post-author {
+            color: #117743;
+            font-weight: bold;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            margin-left: 2px;
+            padding: 1px 3px;
+            color: #fff;
+            background: #800000;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+
+        .post-subject {
+            color: #0F0C5D;
+            font-weight: bold;
+        }
+
+        .post-image {
+            display: block;
+            width: min(100%, 210px);
+            height: auto;
+            box-sizing: border-box;
+            border: 1px solid #D9BFB7;
+        }
+
+        .post-image-container {
+            position: relative;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .post-image-censor {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            width: 100%;
+            place-items: center;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #D9BFB7;
+            background: rgba(30, 30, 30, 0.82);
+            color: #fff;
+            font: inherit;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .post-image-censor:hover {
+            background: rgba(30, 30, 30, 0.72);
+        }
+
+        .back-link {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        a {
+            color: #0000EE;
+        }
+
+        a:visited {
+            color: #551A8B;
+        }
+
+        a:hover {
+            color: #DD0000;
+        }
+
+        body[data-theme="dark"] {
+            background: #1b1b1b;
+            color: #ddd;
+        }
+
+        body[data-theme="dark"] .subtitle {
+            color: #ccc;
+        }
+
+        body[data-theme="dark"] .board-title {
+            border-color: #555;
+        }
+
+        body[data-theme="dark"] .post {
+            background: #292421;
+            border-color: #594d47;
+        }
+
+        body[data-theme="dark"] .access-gate {
+            background: #292421;
+            border-color: #594d47;
+        }
+
+        body[data-theme="dark"] .access-gate input,
+        body[data-theme="dark"] .access-gate button {
+            background: #222;
+            color: #eee;
+            border: 1px solid #777;
+        }
+
+        body[data-theme="dark"] .access-status {
+            color: #ff9a9a;
+        }
+
+        body[data-theme="dark"] .thread-board,
+        body[data-theme="dark"] .post-author {
+            color: #8fceaa;
+        }
+
+        body[data-theme="dark"] .post-subject {
+            color: #b9b7ff;
+        }
+
+        body[data-theme="dark"] .post-date {
+            color: #ccc;
+        }
+
+        body[data-theme="dark"] .post-image {
+            border-color: #777;
+        }
+
+        body[data-theme="dark"] .post-image-censor {
+            border-color: #777;
+        }
+
+        body[data-theme="dark"] a {
+            color: #8ab4f8;
+        }
+
+        body[data-theme="dark"] a:visited {
+            color: #c58af9;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Lostchan</h1>
+            <div class="subtitle">Fórum Anónimo de Discussão</div>
+        </header>
+        <section class="access-gate" id="accessGate" aria-labelledby="accessTitle">
+            <h2 id="accessTitle">Acesso ao board /a/</h2>
+            <p>Introduza o código para ver as publicações de Anime &amp; Mangá.</p>
+            <form id="accessForm">
+                <label for="accessCode">Código de acesso</label>
+                <input id="accessCode" name="accessCode" type="password" autocomplete="current-password" required>
+                <button type="submit">Entrar</button>
+                <p class="access-status" id="accessStatus" role="status" aria-live="polite"></p>
+            </form>
+            <a class="back-link" href="index.html">Voltar ao Lostchan</a>
+        </section>
+        <section id="boardContent" hidden>
+        <div class="board-title">/a/ - Anime &amp; Mangá</div>
+        <article class="thread">
+            <div class="post">
+                <div class="post-header">
+                    <span class="thread-board">/a/</span>
+                    <span class="post-subject"> Anime &amp; Mangá</span>
+                    <span class="post-author"> Anonymous</span>
+                    <span class="admin-badge">admin</span>
+                    <time class="post-date" datetime="2026-10-27T15:36:00Z">27/10/2026, 15:36 UTC</time>
+                </div>
+                <div class="post-image-container">
+                    <img class="post-image" id="postImage3" src="anime-post-1536.png" alt="Ilustração de uma personagem de anime em traje vermelho decorado com rosas">
+                    <button class="post-image-censor" id="revealPostImage3" type="button" aria-controls="postImage3">
+                        Publicação censurada — clicar para revelar
+                    </button>
+                </div>
+            </div>
+        </article>
+        <article class="thread">
+            <div class="post">
+                <div class="post-header">
+                    <span class="thread-board">/a/</span>
+                    <span class="post-subject"> Anime &amp; Mangá</span>
+                    <span class="post-author"> Anonymous</span>
+                    <span class="admin-badge">admin</span>
+                    <time class="post-date" datetime="2026-10-27T15:28:00Z">27/10/2026, 15:28 UTC</time>
+                </div>
+                <div class="post-image-container">
+                    <img class="post-image" id="postImage2" src="anime-post-1528.png" alt="Ilustração de uma personagem de anime em roupa preta">
+                    <button class="post-image-censor" id="revealPostImage2" type="button" aria-controls="postImage2">
+                        Publicação censurada — clicar para revelar
+                    </button>
+                </div>
+            </div>
+        </article>
+        <article class="thread">
+            <div class="post">
+                <div class="post-header">
+                    <span class="thread-board">/a/</span>
+                    <span class="post-subject"> Anime &amp; Mangá</span>
+                    <span class="post-author"> Anonymous</span>
+                    <span class="admin-badge">admin</span>
+                    <time class="post-date" datetime="2026-10-27T14:25:54Z">27/10/2026, 14:25 UTC</time>
+                </div>
+                <div class="post-image-container">
+                    <img class="post-image" id="postImage" src="anime-post.png" alt="Ilustração de uma personagem de anime em roupa preta">
+                    <button class="post-image-censor" id="revealPostImage" type="button" aria-controls="postImage">
+                        Publicação censurada — clicar para revelar
+                    </button>
+                </div>
+            </div>
+        </article>
+        <a class="back-link" href="index.html">Voltar ao Lostchan</a>
+        </section>
+    </main>
+    <script>
+        if (localStorage.getItem('lostchan-theme') === 'dark') {
+            document.body.dataset.theme = 'dark';
+        }
+
+        const accessGate = document.getElementById('accessGate');
+        const boardContent = document.getElementById('boardContent');
+        const accessForm = document.getElementById('accessForm');
+        const accessCode = document.getElementById('accessCode');
+        const accessStatus = document.getElementById('accessStatus');
+        const boardAccessCode = 'gordinhosdoroblox';
+
+        function showBoard() {
+            accessGate.hidden = true;
+            boardContent.hidden = false;
+        }
+
+        accessForm.addEventListener('submit', event => {
+            event.preventDefault();
+            if (accessCode.value === boardAccessCode) {
+                showBoard();
+                return;
+            }
+
+            accessStatus.textContent = 'Código incorreto. Tente novamente.';
+            accessCode.select();
+        });
+
+        document.getElementById('revealPostImage').addEventListener('click', event => {
+            event.currentTarget.remove();
+        });
+        document.getElementById('revealPostImage2').addEventListener('click', event => {
+            event.currentTarget.remove();
+        });
+        document.getElementById('revealPostImage3').addEventListener('click', event => {
+            event.currentTarget.remove();
+        });
+    </script>
+</body>
+</html>

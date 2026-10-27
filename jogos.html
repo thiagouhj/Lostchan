@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos — Lostchan</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background: #FFFFEE;
+            color: #800000;
+            font: 10pt Arial, Helvetica, sans-serif;
+        }
+
+        main {
+            width: min(100%, 800px);
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h1 {
+            margin: 5px 0;
+            font: bold 28pt "Times New Roman", Times, serif;
+        }
+
+        .subtitle {
+            color: #444;
+            font-size: 9pt;
+        }
+
+        .boards-table {
+            width: 80%;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            border: 1px solid #B7C5D9;
+            background: #EEF2FF;
+            border-collapse: collapse;
+        }
+
+        .boards-table th {
+            padding: 5px;
+            color: #fff;
+            background: #98E;
+            border: 1px solid #B7C5D9;
+            font-size: 10pt;
+            text-align: center;
+        }
+
+        .boards-table td {
+            padding: 8px;
+            border: 1px solid #B7C5D9;
+            font-size: 9pt;
+        }
+
+        a {
+            color: #0000EE;
+        }
+
+        a:visited {
+            color: #551A8B;
+        }
+
+        a:hover {
+            color: #DD0000;
+        }
+
+        .back-link {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        body[data-theme="dark"] {
+            background: #1b1b1b;
+            color: #ddd;
+        }
+
+        body[data-theme="dark"] .subtitle {
+            color: #ccc;
+        }
+
+        body[data-theme="dark"] .boards-table {
+            background: #25283a;
+            border-color: #596078;
+        }
+
+        body[data-theme="dark"] .boards-table th,
+        body[data-theme="dark"] .boards-table td {
+            border-color: #596078;
+        }
+
+        body[data-theme="dark"] .boards-table th {
+            background: #454c70;
+        }
+
+        body[data-theme="dark"] a {
+            color: #8ab4f8;
+        }
+
+        body[data-theme="dark"] a:visited {
+            color: #c58af9;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Lostchan</h1>
+            <div class="subtitle">Escolhe um jogo</div>
+        </header>
+        <table class="boards-table">
+            <thead>
+                <tr>
+                    <th>Jogos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="snake.html">Jogo da Cobrinha</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="back-link" href="index.html">Voltar ao Lostchan</a>
+    </main>
+    <script>
+        if (localStorage.getItem('lostchan-theme') === 'dark') {
+            document.body.dataset.theme = 'dark';
+        }
+    </script>
+</body>
+</html>
